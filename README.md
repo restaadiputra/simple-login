@@ -5,6 +5,7 @@
 - Client: https://simple-login-client.herokuapp.com/
 - Service: https://simple-login-services.herokuapp.com/
 
+Note: be patient if it slow, because I'm using free tier Heroku.
 
 
 There two di app that need to be run, services and client.
