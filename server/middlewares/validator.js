@@ -33,11 +33,10 @@ const isIndonesianPhone = (value = "") => {
 
 const userValidationRules = () => {
   return [
-    body("first_name").exists(),
-    body("last_name").exists(),
+    body("first_name").exists().withMessage('First name is required'),
+    body("last_name").exists().withMessage('Last name is required'),
     check("phone_number")
       .exists().withMessage("Mobile number is required").bail()
-      // .isMobilePhone().withMessage('Mobile number is invalid').bail()
       .custom(isIndonesianPhone).withMessage("Mobile number must use Indonesian number").bail()
       .custom(isPhoneNumberExist),
     check("email")
@@ -47,6 +46,12 @@ const userValidationRules = () => {
   ];
 };
 
+const authValidationRules = () => {
+  return [
+    check("email").exists().withMessage("E-mail is required")
+  ];
+}
+
 const validate = (req, res, next) => {
   const errors = validationResult(req);
   if (errors.isEmpty()) {
@@ -55,12 +60,13 @@ const validate = (req, res, next) => {
   const extractedErrors = [];
   errors.array().map((err) => extractedErrors.push({ [err.param]: err.msg }));
 
-  return res.status(422).json({
+  return res.status(400).json({
     errors: extractedErrors,
   });
 };
 
 module.exports = {
   userValidationRules,
+  authValidationRules,
   validate,
 };

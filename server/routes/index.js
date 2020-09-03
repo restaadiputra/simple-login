@@ -3,7 +3,7 @@ const router = express.Router();
 
 const userController = require("../controllers").user;
 const authController = require("../controllers").auth;
-const { userValidationRules, validate } = require("../middlewares/validator");
+const { userValidationRules, authValidationRules, validate } = require("../middlewares/validator");
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
@@ -18,6 +18,6 @@ router.put("/api/user/:id", userController.update);
 router.delete("/api/user/:id", userController.delete);
 
 /* Auth Router */
-router.post("/api/auth", authController.login);
+router.post("/api/auth", authValidationRules(), validate, authController.login);
 
 module.exports = router;

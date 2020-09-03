@@ -9,7 +9,9 @@ module.exports = {
     })
       .then((users) => {
         if (users.length > 0) {
-          return res.status(200).send(users)
+          return res.status(200).send({
+            message: "Success"
+          })
         } else {
           return res.status(404).send({
             message: "User Not Found",
