@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { Button, Form, Input, Typography, Alert } from "antd";
 import { useHistory } from "react-router-dom";
+import get from 'lodash/get';
 
 import styles from "./styles.module.css";
-
 import { login } from "services/auth";
+import MESSAGE from "constants/message"
 
 const { Title } = Typography;
 
@@ -23,16 +24,18 @@ const Login = ({ location }) => {
       })
       .catch((err) => {
         setLoading(false);
-        const { message } = err.response.data;
+        const message = get(err, 'response.data.message', undefined);
 
         if (message) {
           setError(message);
           return;
+        } else {
+          setError(MESSAGE.GENERAL_ERROR)
         }
       });
   };
 
-  const successAlert = location.state.login && !error && (
+  const successAlert = location?.state.login && !error && (
     <div className={styles.alert}>
       <Alert message="Register success" type="success" showIcon closable />
     </div>
@@ -68,8 +71,9 @@ const Login = ({ location }) => {
               block
               disabled={loading}
               loading={loading}
+              role="button"
             >
-              Register
+              Login
             </Button>
           </Form.Item>
         </Form>

@@ -1,20 +1,22 @@
-export const removeNonNumeric = (value = "") => {
-  const useSymbol = value.slice(0, 1) === "+";
+export const stripNonPhoneCharacter = (value = "") => {
+  if (typeof value !== "string") {
+    throw new Error("value must be type of string");
+  }
 
-  return (useSymbol ? "+" : "") + value.replace(/\D+/g, "");
+  return value.replace(/[^0-9+\s]/g, "");
 };
 
-export const formatPhoneNumber = (value = "", useZero = true) => {
-  if (value === undefined || value === null) {
+export const formatPhoneNumber = (value = "") => {
+  if (value === null) {
     return "";
   }
   let msisdn = value.replace("+", "");
   msisdn = msisdn.replace(/\D+/g, "");
 
   if (msisdn.slice(0, 2) === "62") {
-    msisdn = `${useZero ? 0 : ""}${msisdn.slice(2)}`;
+    msisdn = `0${msisdn.slice(2)}`;
   } else if (/^[1-9]/.test(msisdn.charAt(0))) {
-    msisdn = `${useZero ? 0 : ""}${msisdn}`;
+    msisdn = `0${msisdn}`;
   }
 
   return msisdn === "" ? undefined : msisdn;
@@ -35,17 +37,27 @@ export const registerFormSanitizer = (value) => {
   };
 };
 
-export const formatError = (errors) =>
-  errors.map((err) => {
+export const formatError = (errors) => {
+  if (!Array.isArray(errors)) {
+    throw Error("value must be an array");
+  }
+
+  return errors.map((err) => {
     const field = Object.keys(err)[0];
     return {
       name: field,
       errors: [err[field]],
     };
   });
+};
 
-export const resetError = (formFields) =>
-  Object.keys(formFields).map((field) => ({
+export const resetError = (formFields) => {
+  if (typeof formFields !== "object") {
+    throw Error("value must be an object");
+  }
+
+  return Object.keys(formFields).map((field) => ({
     name: field,
     errors: [],
-  }))
+  }));
+};

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Button, Form, Typography, Alert } from "antd";
 import { useHistory } from "react-router-dom";
+import get from 'lodash/get';
 
 import {
   BirthdayField,
@@ -10,15 +11,15 @@ import {
   PhoneNumberField,
 } from "./FormItem";
 import styles from "./styles.module.css";
-
 import { registerUser } from "services/register";
 import { formatError, resetError } from "utils/sanitizer";
+import MESSAGE from "constants/message"
 
 const { Title } = Typography;
 
 const Registration = () => {
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState(null);
   const [form] = Form.useForm();
   const history = useHistory();
 
@@ -34,24 +35,25 @@ const Registration = () => {
       })
       .catch((err) => {
         setLoading(false);
-        setError(true);
-        const { errors } = err.response.data;
-
+        const errors = get(err, 'response.data.errors', undefined);
+        
         if (errors) {
+          setError(MESSAGE.FORM_NEED_ATTENTION);
           form.setFields(formatError(errors));
-          return;
+        } else {
+          setError(MESSAGE.GENERAL_ERROR)
         }
       });
   };
 
   const onFinishFailed = () => {
-    setError(true);
+    setError(MESSAGE.FORM_NEED_ATTENTION);
   };
 
   const failedAlert = error && (
     <div className={styles.alert}>
       <Alert
-        message="There are fields that require your attention"
+        message={error}
         type="error"
         showIcon
         closable
@@ -83,6 +85,7 @@ const Registration = () => {
               block
               disabled={loading}
               loading={loading}
+              role="button"
             >
               Register
             </Button>

@@ -29,7 +29,7 @@ const generateOptions = (month, year) => {
     case 11:
       return generateDay(30);
     default:
-      throw new Error("month is out of value");
+      return generateDay(0);
   }
 };
 
@@ -39,6 +39,7 @@ const Day = ({ month, year, ...props }) => {
       options={generateOptions(month, year)}
       placeholder="Date"
       {...props}
+      data-testid="date"
     />
   );
 };
@@ -51,6 +52,6 @@ Day.propTypes = {
 Day.defaultProps = {
   month: 1,
   year: 2000,
-}
+};
 
 export default Day;

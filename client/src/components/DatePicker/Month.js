@@ -17,7 +17,14 @@ const options = [
 ];
 
 const Month = (props) => {
-  return <Select options={options} placeholder="Month" {...props} />;
+  return (
+    <Select
+      options={options}
+      placeholder="Month"
+      {...props}
+      data-testid="month"
+    />
+  );
 };
 
 export default Month;

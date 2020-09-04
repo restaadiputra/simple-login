@@ -16,8 +16,19 @@
   "scripts": {
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
-    "test": "react-app-rewired test",
+    "test": "DEBUG_PRINT_LIMIT=20000 react-app-rewired test",
     "eject": "react-scripts eject"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "**/*.{js,jsx}",
+      "!**/build/**",
+      "!**/node_modules/**",
+      "!**/coverage/**",
+      "!**/serviceWorker.js",
+      "!**/src/index.js",
+      "!**/pages/index.js"
+    ]
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -35,6 +46,8 @@
     ]
   },
   "devDependencies": {
+    "@types/jest": "^26.0.13",
+    "axios-mock-adapter": "^1.18.2",
     "babel-eslint": "^10.1.0",
     "babel-loader": "^8.1.0",
     "babel-plugin-import": "^1.13.0",
