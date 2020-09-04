@@ -35,7 +35,7 @@ const Login = ({ location }) => {
       });
   };
 
-  const successAlert = location?.state.login && !error && (
+  const successAlert = location?.state?.login && !error && (
     <div className={styles.alert}>
       <Alert message="Register success" type="success" showIcon closable />
     </div>
