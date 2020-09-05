@@ -9,7 +9,7 @@ import {
 } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
-import Registration from "../Registration";
+import Registration from "./Registration";
 import * as service from "services/register";
 
 afterEach(() => {

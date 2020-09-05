@@ -2,7 +2,7 @@ import React from "react";
 import { render, waitForElement, cleanup, wait, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
-import Login from "../Login";
+import Login from "./Login";
 import * as service from "services/auth";
 import MESSAGE from 'constants/message'
 

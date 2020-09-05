@@ -1,6 +1,6 @@
 import React from "react";
 import { render, fireEvent } from "@testing-library/react";
-import Success from "../Success";
+import Success from "./Success";
 
 const mockHistoryReplace = jest.fn();
 

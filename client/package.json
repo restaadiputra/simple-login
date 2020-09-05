@@ -26,8 +26,7 @@
       "!**/node_modules/**",
       "!**/coverage/**",
       "!**/serviceWorker.js",
-      "!**/src/index.js",
-      "!**/pages/index.js"
+      "!**/index.js"
     ]
   },
   "eslintConfig": {
