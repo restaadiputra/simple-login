@@ -152,11 +152,15 @@ npm run test
 
 or if you want to see the coverage, you can use
 
-```
+```shell
 npm run test -- --coverage
 ```
 
 
+
+##### Test Coverage
+
+![coverage](docs/coverage.png)
 
 
 

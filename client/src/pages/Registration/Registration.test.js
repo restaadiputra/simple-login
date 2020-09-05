@@ -5,7 +5,7 @@ import {
   waitForElement,
   wait,
   cleanup,
-  getByText,
+  fireEvent,
 } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
@@ -76,14 +76,65 @@ test("should call register service with form value", async () => {
     allAtOnce: true,
   });
 
-  // fireEvent.mouseDown(screen.getByTestId('month').firstElementChild)
-  // fireEvent.click(screen.getByText('January'));
+  userEvent.click(screen.getByRole("button"));
 
-  // fireEvent.mouseDown(screen.getByTestId('date').firstElementChild)
-  // fireEvent.click(screen.getByText('01'));
+  await wait(() => expect(mockRegisterUser).toHaveBeenCalled());
+  expect(mockRegisterUser).toHaveBeenCalledWith(data);
+  expect(mockHistoryPush).toHaveBeenCalledTimes(1);
+  expect(mockHistoryPush).toHaveBeenCalledWith("/login", { login: true });
+});
 
-  // fireEvent.mouseDown(screen.getByTestId('year').firstElementChild)
-  // fireEvent.click(screen.getByText('2000'));
+test("should call register service with form value full value", async () => {
+  data.month = 1;
+  data.day = 1;
+  data.year = 2010;
+  data.gender = "male";
+
+  mockRegisterUser.mockImplementation(() =>
+    Promise.resolve({ message: "Success" })
+  );
+
+  const {container, debug} = render(<Registration />);
+
+  userEvent.type(screen.getByPlaceholderText("Mobile Phone"), data.phone_number, {
+    allAtOnce: true,
+  });
+  userEvent.type(screen.getByPlaceholderText("First Name"), data.first_name, {
+    allAtOnce: true,
+  });
+  userEvent.type(screen.getByPlaceholderText("Last Name"), data.last_name, {
+    allAtOnce: true,
+  });
+  userEvent.type(screen.getByPlaceholderText("Email"), data.email, {
+    allAtOnce: true,
+  });
+
+  const monthSelect = container.querySelector(
+    '[data-testid=month] > .ant-select-selector'
+  )
+  const dateSelect = container.querySelector(
+    '[data-testid=date] > .ant-select-selector'
+  )
+  const yearSelect = container.querySelector(
+    '[data-testid=year] > .ant-select-selector'
+  )
+
+  fireEvent.mouseDown(monthSelect)
+  await waitForElement(() => screen.getByText('January'))
+  fireEvent.click(document.querySelector(`[label="January"]`))
+  await waitForElement(() => document.querySelector(`[title="January"]`))
+
+  fireEvent.mouseDown(dateSelect)
+  await waitForElement(() => document.querySelector(`[label="01"]`))
+  fireEvent.click(document.querySelector(`[label="01"]`))
+  await waitForElement(() => document.querySelector(`[title="01"]`))
+
+  fireEvent.mouseDown(yearSelect)
+  await waitForElement(() => document.querySelector(`[label="2010"]`))
+  fireEvent.click(document.querySelector(`[label="2010"]`))
+  await waitForElement(() => document.querySelector(`[title="2010"]`))
+
+  fireEvent.click(screen.getByDisplayValue("male"))
 
   userEvent.click(screen.getByRole("button"));
 

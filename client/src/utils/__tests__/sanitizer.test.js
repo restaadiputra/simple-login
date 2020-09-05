@@ -22,6 +22,10 @@ describe("stripNonPhoneCharacter function", () => {
     expect(stripNonPhoneCharacter(test3)).toBe("089 999 999 999");
     expect(stripNonPhoneCharacter(test4)).toBe("123123");
   });
+
+  test('should return empty string if value is null', () => {
+    expect(stripNonPhoneCharacter()).toBe("")
+  });
 });
 
 describe("formatPhoneNumber function", () => {

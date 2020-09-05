@@ -6,8 +6,8 @@ const GenderField = ({ loading }) => {
   return (
     <Form.Item name="gender">
       <Radio.Group disabled={loading}>
-        <Radio value={"male"}>Male</Radio>
-        <Radio value={"female"}>Female</Radio>
+        <Radio value={"male"} data-testid="gender-male">Male</Radio>
+        <Radio value={"female"} data-testid="gender-female">Female</Radio>
       </Radio.Group>
     </Form.Item>
   );
