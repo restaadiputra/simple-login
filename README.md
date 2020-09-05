@@ -142,6 +142,24 @@ By default it will run at http://localhost:3000.
 
 
 
+#### Test
+
+To test the client, you can use 
+
+```shell
+npm run test
+```
+
+or if you want to see the coverage, you can use
+
+```
+npm run test -- --coverage
+```
+
+
+
+
+
 ## Tech Use
 
 #### Server
@@ -156,10 +174,9 @@ By default it will run at http://localhost:3000.
 #### Client
 
 - React
-
 - Ant-Design
-
 - Axios
+- @testing-library
 
   
 
